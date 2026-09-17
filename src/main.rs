@@ -1,7 +1,13 @@
 use crate::{error::AppError, tlds::TLDS};
 use anyhow::Context;
 use askama::Template;
-use axum::{Router, extract::Query, response::Html, routing::get};
+use axum::{
+    Router,
+    extract::{Query, State},
+    response::Html,
+    routing::get,
+};
+use hickory_resolver::TokioResolver;
 use serde::Deserialize;
 
 mod error;
@@ -9,11 +15,20 @@ mod tlds;
 
 const MAX_SLD_LEN: usize = 63;
 
+#[derive(Clone)]
+struct Ctx {
+    hickory: TokioResolver,
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let app = Router::new()
         .route("/", get(|| async { "Hello, World!" }))
-        .route("/search", get(search));
+        .route("/search", get(search))
+        .route("/lookup", get(lookup))
+        .with_state(Ctx {
+            hickory: TokioResolver::builder_tokio()?.build()?,
+        });
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:8080").await?;
     println!("listening to http://{}", listener.local_addr()?);
@@ -28,13 +43,20 @@ struct SearchParams {
 #[derive(Template)]
 #[template(
     ext = "html",
-    source = "
+    source = r#"
 <ul>
     {% for domain in domains %}
-        <li>{{domain}}</li>
+        <li>
+            <span>{{domain}}</span>
+            <div
+                hx-get="http://127.0.0.1:8080/lookup?domain={{domain}}"
+                hx-trigger="load"
+                hx-swap="outerHTML"
+            ></div>
+        </li>
     {% endfor %}
 </ul>
-"
+"#
 )]
 struct SearchTemplate {
     domains: Vec<String>,
@@ -95,4 +117,40 @@ fn devowel(word: &str) -> Vec<String> {
         res.push(curr.clone());
     }
     res
+}
+
+#[derive(Deserialize)]
+struct LookupParams {
+    domain: String,
+}
+
+#[derive(Template)]
+#[template(
+    ext = "html",
+    source = r#"
+<a href="https://www.dynadot.com/domain/search?rscreg=shorter&domain={{domain}}">
+    {% if available %}
+        continue
+    {% else %}
+        lookup
+    {% endif %}
+</a>
+"#
+)]
+struct LookupTemplate {
+    available: bool,
+    domain: String,
+}
+
+async fn lookup(
+    Query(LookupParams { domain }): Query<LookupParams>,
+    State(Ctx { hickory }): State<Ctx>,
+) -> Result<Html<String>, AppError> {
+    let sld = domain.split('.').next().context("failed to get sld")?;
+    let available = sld.len() > 1
+        && hickory
+            .ns_lookup(format!("{domain}."))
+            .await
+            .is_err_and(|e| e.is_nx_domain());
+    Ok(Html(LookupTemplate { available, domain }.render()?))
 }
