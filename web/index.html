@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>shorter</title>
+    <meta name="description" content="a domain shortener tool" />
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="htmx.min.js"></script>
+  </head>
+  <body>
+    <input
+      name="q"
+      hx-get="http://127.0.0.1:8080/search"
+      hx-trigger="input changed delay:200ms"
+      hx-target="#search-results"
+      placeholder="type a domain..."
+    />
+    <div id="search-results"></div>
+  </body>
+</html>
