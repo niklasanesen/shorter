@@ -11,13 +11,35 @@
     <script src="htmx.min.js"></script>
   </head>
   <body>
-    <input
-      name="q"
-      hx-get="http://127.0.0.1:8080/search"
-      hx-trigger="input changed delay:200ms"
-      hx-target="#search-results"
-      placeholder="type a domain..."
-    />
-    <div id="search-results"></div>
+    <div class="container">
+      <header>
+        <nav>
+          <a href="/">
+            <img src="logomark.svg" alt="shorter" />
+          </a>
+          <a
+            href="https://www.dynadot.com/domain/search?rscreg=shorter"
+            class="link"
+          >
+            dynadot
+          </a>
+          <a href="https://github.com/niklasanesen/shorter" class="link">
+            repo
+          </a>
+          <a href="mailto:contact@shorter.dev" class="link"> contact </a>
+        </nav>
+        <a href="#search" class="btn btn-primary">start now</a>
+      </header>
+      <main>
+        <input
+          name="q"
+          hx-get="http://127.0.0.1:8080/search"
+          hx-trigger="input changed delay:200ms"
+          hx-target="#search-results"
+          placeholder="type a domain..."
+        />
+        <div id="search-results"></div>
+      </main>
+    </div>
   </body>
 </html>

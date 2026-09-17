@@ -1,0 +1,20 @@
+<svg
+  width="16"
+  height="24"
+  viewBox="0 0 16 24"
+  fill="#ffffff"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g transform="translate(-8,-4)">
+    <g transform="translate(8,4)">
+      <path
+        d="m 16,-8 a 8,8 0 0 1 -4,6.9282033 8,8 0 0 1 -8.0000002,-2e-7 A 8,8 0 0 1 0,-8 h 8 z"
+        transform="rotate(90)"
+      />
+      <path
+        d="m 24,8 a 8,8 0 0 1 -4,6.928203 8,8 0 0 1 -8,0 A 8,8 0 0 1 8,8 h 8 z"
+        transform="matrix(0,1,1,0,0,0)"
+      />
+    </g>
+  </g>
+</svg>
