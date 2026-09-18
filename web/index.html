@@ -29,7 +29,7 @@
               repo
             </a>
             <a href="mailto:contact@shorter.dev" class="link"> contact </a>
-            <a href="#search" class="btn btn-primary">start now</a>
+            <a href="#q" class="btn btn-primary">start now</a>
           </nav>
         </details>
       </header>
@@ -37,19 +37,35 @@
         <div class="hero">
           <h1 class="landing">search for shorter domains</h1>
           <input
-            id="search"
+            id="q"
             name="q"
             hx-get="http://127.0.0.1:8080/search"
             hx-trigger="input changed delay:200ms"
             hx-target="#search-results"
             placeholder="type a domain..."
-            oninput="if (location.hash !== '#search') location.hash = 'search';"
+            oninput="if (location.hash !== '#q') location.hash = 'q';"
             autofocus
             autocomplete="off"
           />
           <div id="search-results" class="search"></div>
+          <div class="landing examples">
+            <a href="#q" class="link" onclick="example('naval')">naval</a>
+            <a href="#q" class="link" onclick="example('linktree')">linktree</a>
+            <a href="#q" class="link" onclick="example('google')">google</a>
+            <a href="#q" class="link" onclick="example('matt')">matt</a>
+            <a href="#q" class="link" onclick="example('instagram')">
+              instagram
+            </a>
+          </div>
         </div>
       </main>
     </div>
+    <script>
+      function example(q) {
+        const input = document.getElementById("q");
+        input.value = q;
+        htmx.trigger(input, "input");
+      }
+    </script>
   </body>
 </html>

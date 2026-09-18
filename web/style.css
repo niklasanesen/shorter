@@ -26,7 +26,7 @@ header {
 nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem 1.5rem;
   flex-direction: column;
 }
 
@@ -105,7 +105,7 @@ header img {
   }
 }
 
-body:has(#search:target) .landing {
+body:has(#q:target) .landing {
   display: none;
 }
 
@@ -187,11 +187,11 @@ li span {
   white-space: nowrap;
 }
 
-body:not(:has(#search:target)) .search {
+body:not(:has(#q:target)) .search {
   display: none;
 }
 
-body:not(:has(#search:target)) .hero {
+body:not(:has(#q:target)) .hero {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,7 +205,15 @@ h1 {
   line-height: 1.2;
 }
 
-body:has(#search:target) input {
+body:has(#q:target) input {
   max-width: none;
   margin-block: 1.5rem;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+  max-width: 14rem;
 }
