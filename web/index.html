@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-      <header>
+      <header class="landing">
         <a href="/">
           <img src="logomark.svg" alt="shorter" />
         </a>
@@ -34,14 +34,21 @@
         </details>
       </header>
       <main>
-        <input
-          name="q"
-          hx-get="http://127.0.0.1:8080/search"
-          hx-trigger="input changed delay:200ms"
-          hx-target="#search-results"
-          placeholder="type a domain..."
-        />
-        <div id="search-results"></div>
+        <div class="hero">
+          <h1 class="landing">search for shorter domains</h1>
+          <input
+            id="search"
+            name="q"
+            hx-get="http://127.0.0.1:8080/search"
+            hx-trigger="input changed delay:200ms"
+            hx-target="#search-results"
+            placeholder="type a domain..."
+            oninput="if (location.hash !== '#search') location.hash = 'search';"
+            autofocus
+            autocomplete="off"
+          />
+          <div id="search-results" class="search"></div>
+        </div>
       </main>
     </div>
   </body>

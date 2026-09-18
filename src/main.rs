@@ -52,10 +52,12 @@ struct SearchParams {
                 hx-get="http://127.0.0.1:8080/lookup?domain={{domain}}"
                 hx-trigger="load"
                 hx-swap="outerHTML"
+                class="pending"
             ></div>
         </li>
     {% endfor %}
 </ul>
+<p class="disclaimer">* affiliate links</p>
 "#
 )]
 struct SearchTemplate {
@@ -128,7 +130,10 @@ struct LookupParams {
 #[template(
     ext = "html",
     source = r#"
-<a href="https://www.dynadot.com/domain/search?rscreg=shorter&domain={{domain}}">
+<a 
+    href="https://www.dynadot.com/domain/search?rscreg=shorter&domain={{domain}}"
+    class="btn btn-secondary {% if available %}text-green{% else %}text-red{% endif %}"
+>
     {% if available %}
         continue
     {% else %}
