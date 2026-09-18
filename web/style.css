@@ -16,16 +16,18 @@ body {
 }
 
 header {
-  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-block: 1.25rem;
+  flex-wrap: wrap;
 }
 
 nav {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex-direction: column;
 }
 
 @font-face {
@@ -64,4 +66,41 @@ nav {
 
 .btn-primary:hover {
   background-color: #766589;
+}
+
+details {
+  display: contents;
+}
+
+details::details-content {
+  width: 100%;
+}
+
+summary {
+  display: block;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+header img {
+  display: block;
+}
+
+@media (width >= 40rem) {
+  summary {
+    display: none;
+  }
+  details::details-content,
+  nav {
+    display: contents;
+  }
+  header {
+    gap: 1.5rem;
+    padding-block: 1rem;
+  }
+  .btn-primary {
+    margin-left: auto;
+  }
 }
