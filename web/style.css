@@ -224,3 +224,13 @@ video {
   display: block;
   padding-block: 10rem;
 }
+
+footer {
+  font-size: 0.875rem;
+  color: #737373;
+  display: flex;
+  justify-content: space-between;
+  padding-block: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
