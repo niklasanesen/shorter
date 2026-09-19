@@ -217,3 +217,10 @@ body:has(#q:target) input {
   gap: 1rem 1.5rem;
   max-width: 14rem;
 }
+
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding-block: 10rem;
+}
