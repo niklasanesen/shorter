@@ -234,3 +234,16 @@ footer {
   flex-wrap: wrap;
   gap: 1rem;
 }
+
+.center {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.center h1 {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
