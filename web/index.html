@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width" />
     <title>shorter</title>
     <meta name="description" content="a domain shortener tool" />
+    <meta name="htmx-config" content='{"mode": "cors"}' />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="connect-src 'self' http://127.0.0.1:8080 https://5mmnbausmvkvlgyylpztxdkbsu0wnyyf.lambda-url.eu-west-1.on.aws"
+    />
     <link rel="icon" href="favicon.ico" sizes="32x32" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link href="style.css" rel="stylesheet" />
@@ -39,7 +44,7 @@
           <input
             id="q"
             name="q"
-            hx-get="http://127.0.0.1:8080/search"
+            hx-get="/search"
             hx-trigger="input changed delay:200ms"
             hx-target="#search-results"
             placeholder="type a domain..."
@@ -73,6 +78,13 @@
         input.value = q;
         htmx.trigger(input, "input");
       }
+      const apiUrl =
+        location.hostname === "shorter.dev"
+          ? "https://5mmnbausmvkvlgyylpztxdkbsu0wnyyf.lambda-url.eu-west-1.on.aws"
+          : "http://127.0.0.1:8080";
+      htmx.on("htmx:config:request", (e) => {
+        e.detail.ctx.request.action = apiUrl + e.detail.ctx.request.action;
+      });
     </script>
   </body>
 </html>

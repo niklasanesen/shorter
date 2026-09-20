@@ -4,11 +4,13 @@ use askama::Template;
 use axum::{
     Router,
     extract::{Query, State},
+    http::{HeaderValue, Method},
     response::Html,
     routing::get,
 };
 use hickory_resolver::TokioResolver;
 use serde::Deserialize;
+use tower_http::cors::{Any, CorsLayer};
 
 mod error;
 mod tlds;
@@ -26,6 +28,12 @@ async fn main() -> anyhow::Result<()> {
         .route("/", get(|| async { "Hello, World!" }))
         .route("/search", get(search))
         .route("/lookup", get(lookup))
+        .layer(
+            CorsLayer::new()
+                .allow_methods([Method::GET])
+                .allow_origin("https://shorter.dev".parse::<HeaderValue>()?)
+                .allow_headers(Any),
+        )
         .with_state(Ctx {
             hickory: TokioResolver::builder_tokio()?.build()?,
         });
@@ -49,7 +57,7 @@ struct SearchParams {
         <li>
             <span>{{domain}}</span>
             <div
-                hx-get="http://127.0.0.1:8080/lookup?domain={{domain}}"
+                hx-get="/lookup?domain={{domain}}"
                 hx-trigger="load"
                 hx-swap="outerHTML"
                 class="pending"
