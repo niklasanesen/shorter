@@ -16,13 +16,13 @@ cargo run
 
 ## web
 
-to view the website simply open the `web/index.html` file in a browser.
+to view the website open the `web/index.html` file in a browser
 
 ## architecture
 
-- **server**: an http api written in [axum](https://github.com/tokio-rs/axum) and deployed to [aws lambda](https://aws.amazon.com/lambda).
-- **web**: a static site written in [htmx](https://htmx.org)/css/js and deployed to [cloudflare pages](https://www.cloudflare.com/products/pages).
+- **server**: an http api built with [axum](https://github.com/tokio-rs/axum) and deployed to [aws lambda](https://aws.amazon.com/lambda)
+- **web**: a static site written in [htmx](https://htmx.org)/css/js and deployed to [cloudflare pages](https://www.cloudflare.com/products/pages)
 
 ## credits
 
-inspired by [panelsdesu](https://panelsdesu.com) and [instant domain search](https://instantdomainsearch.com).
+inspired by [panelsdesu](https://panelsdesu.com) and [instant domain search](https://instantdomainsearch.com)
