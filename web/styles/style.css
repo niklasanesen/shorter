@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-black text-white font-inter;
+  }
+  * {
+    @apply border-neutral-800;
+  }
+}
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+  --color-shorter: #766589;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/Inter.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../fonts/Manrope.woff2") format("woff2");
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center h-8 px-4 shrink-0 whitespace-nowrap transition-colors rounded-full text-sm;
+  }
+  .btn-primary {
+    @apply bg-white text-black hover:bg-shorter;
+  }
+  .input {
+    @apply h-12 w-full bg-neutral-800 rounded-full px-4 outline-none placeholder:text-neutral-500;
+  }
+}
+
+@custom-variant q (&:where(body:has(#q:target) *));
+
+@source "../../src/";

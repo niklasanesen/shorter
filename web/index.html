@@ -5,86 +5,120 @@
     <meta name="viewport" content="width=device-width" />
     <title>shorter</title>
     <meta name="description" content="a domain shortener tool" />
-    <meta name="htmx-config" content='{"mode": "cors"}' />
     <meta
       http-equiv="Content-Security-Policy"
       content="connect-src 'self' http://127.0.0.1:8080 https://5mmnbausmvkvlgyylpztxdkbsu0wnyyf.lambda-url.eu-west-1.on.aws"
     />
     <link rel="icon" href="favicon.ico" sizes="32x32" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link href="style.css" rel="stylesheet" />
-    <script src="htmx.min.js"></script>
+    <link href="styles/output.css" rel="stylesheet" />
+    <script src="scripts/htmx.min.js" defer></script>
+    <script src="scripts/main.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <header class="landing">
-        <a href="/">
-          <img src="logomark.svg" alt="shorter" />
-        </a>
-        <details>
-          <summary><img src="menu.svg" alt="menu" /></summary>
-          <nav>
+    <div class="container mx-auto px-6 xl:max-w-7xl">
+      <header
+        class="flex items-center justify-between py-5 flex-wrap md:gap-8 q:hidden"
+      >
+        <a href="index.html"><img src="assets/logomark.svg" alt="shorter" /></a>
+        <details
+          class="contents details-content:w-full md:details-content:contents"
+        >
+          <summary class="block [&::-webkit-details-marker]:hidden md:hidden">
+            <img src="assets/menu.svg" alt="menu" />
+          </summary>
+          <nav class="flex flex-col items-center gap-3 md:contents text-sm">
             <a
               href="https://www.dynadot.com/domain/search?rscreg=shorter"
-              class="link"
+              class="hover:text-shorter"
             >
               dynadot
             </a>
-            <a href="https://github.com/niklasanesen/shorter" class="link">
+            <a
+              href="https://github.com/niklasanesen/shorter"
+              class="hover:text-shorter"
+            >
               repo
             </a>
-            <a href="mailto:contact@shorter.dev" class="link"> contact </a>
-            <a href="#q" class="btn btn-primary">start now</a>
+            <a href="mailto:contact@shorter.dev" class="hover:text-shorter">
+              contact
+            </a>
+            <a href="#q" class="md:ml-auto btn btn-primary duration-200">
+              start now
+            </a>
           </nav>
         </details>
       </header>
       <main>
-        <div class="hero">
-          <h1 class="landing">search for shorter domains</h1>
-          <input
-            id="q"
-            name="q"
-            hx-get="/search"
-            hx-trigger="input changed delay:200ms"
-            hx-target="#search-results"
-            placeholder="type a domain..."
-            oninput="if (location.hash !== '#q') location.hash = 'q';"
-            autofocus
-            autocomplete="off"
-          />
-          <div id="search-results" class="search"></div>
-          <div class="landing examples">
-            <a href="#q" class="link" onclick="example('naval')">naval</a>
-            <a href="#q" class="link" onclick="example('linktree')">linktree</a>
-            <a href="#q" class="link" onclick="example('google')">google</a>
-            <a href="#q" class="link" onclick="example('matt')">matt</a>
-            <a href="#q" class="link" onclick="example('instagram')">
-              instagram
-            </a>
+        <div class="py-40 q:py-6">
+          <div
+            class="flex flex-col items-center gap-6 px-2 q:px-0 q:items-stretch"
+          >
+            <h1
+              class="font-manrope font-semibold text-center text-4xl text-balance q:hidden"
+            >
+              search for shorter domains
+            </h1>
+            <input
+              id="q"
+              name="q"
+              hx-get="/search"
+              hx-trigger="input changed delay:200ms"
+              hx-target="#search-results"
+              placeholder="type a domain..."
+              oninput="if (location.hash !== '#q') location.hash = 'q';"
+              autofocus
+              autocomplete="off"
+              class="input max-w-2xl q:max-w-none"
+            />
+            <div
+              class="flex gap-x-6 flex-wrap max-w-52 gap-y-3 justify-center text-sm q:hidden"
+            >
+              <a
+                href="#q"
+                class="hover:text-shorter"
+                onclick="example('naval')"
+              >
+                naval
+              </a>
+              <a
+                href="#q"
+                class="hover:text-shorter"
+                onclick="example('linktree')"
+              >
+                linktree
+              </a>
+              <a
+                href="#q"
+                class="hover:text-shorter"
+                onclick="example('google')"
+              >
+                google
+              </a>
+              <a
+                href="#q"
+                class="hover:text-shorter"
+                onclick="example('bitly')"
+              >
+                bitly
+              </a>
+              <a href="#q" class="hover:text-shorter" onclick="example('matt')">
+                matt
+              </a>
+            </div>
+            <div id="search-results" class="hidden q:block"></div>
           </div>
         </div>
-        <video autoplay muted loop playsinline class="landing">
-          <source src="demo.mp4" />
+        <video autoplay muted loop playsinline class="py-20 q:hidden">
+          <source src="assets/demo.mp4" />
         </video>
       </main>
-      <footer class="landing">
+      <footer
+        class="flex justify-between py-6 text-sm text-neutral-500 flex-wrap q:hidden gap-3"
+      >
         <p>© 2026 shorter</p>
         <p>this site stores no user data</p>
       </footer>
     </div>
-    <script>
-      function example(q) {
-        const input = document.getElementById("q");
-        input.value = q;
-        htmx.trigger(input, "input");
-      }
-      const apiUrl =
-        location.hostname === "shorter.dev"
-          ? "https://5mmnbausmvkvlgyylpztxdkbsu0wnyyf.lambda-url.eu-west-1.on.aws"
-          : "http://127.0.0.1:8080";
-      htmx.on("htmx:config:request", (e) => {
-        e.detail.ctx.request.action = apiUrl + e.detail.ctx.request.action;
-      });
-    </script>
   </body>
 </html>

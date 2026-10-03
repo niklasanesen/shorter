@@ -52,20 +52,20 @@ struct SearchParams {
 #[template(
     ext = "html",
     source = r#"
-<ul>
+<ul class="flex flex-col gap-3">
     {% for domain in domains %}
-        <li>
-            <span>{{domain}}</span>
+        <li class="flex items-center justify-between h-20 bg-neutral-950 border rounded-3xl px-6">
+            <span class="truncate">{{domain}}</span>
             <div
                 hx-get="/lookup?domain={{domain}}"
                 hx-trigger="load"
                 hx-swap="outerHTML"
-                class="pending"
+                class="w-20 h-8 rounded-full bg-neutral-900 shrink-0 animate-pulse"
             ></div>
         </li>
     {% endfor %}
 </ul>
-<p class="disclaimer">* affiliate links</p>
+<p class="text-sm text-neutral-600 pt-3">* affiliate links</p>
 "#
 )]
 struct SearchTemplate {
@@ -140,7 +140,7 @@ struct LookupParams {
     source = r#"
 <a 
     href="https://www.dynadot.com/domain/search?rscreg=shorter&domain={{domain}}"
-    class="btn btn-secondary {% if available %}text-green{% else %}text-red{% endif %}"
+    class="btn hover:bg-neutral-900 {% if available %}text-green-500{% else %}text-red-500{% endif %}"
 >
     {% if available %}
         continue

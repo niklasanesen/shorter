@@ -7,7 +7,7 @@ use axum::{
 pub struct AppError(anyhow::Error);
 
 #[derive(Template)]
-#[template(ext = "html", source = r#"<p class="text-red">{{message}}</p>"#)]
+#[template(ext = "html", source = r#"<p class="text-red-500">{{message}}</p>"#)]
 struct ErrorTemplate {
     message: String,
 }

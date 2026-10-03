@@ -16,12 +16,12 @@ cargo run
 
 ## web
 
-to view the website open the `web/index.html` file in a browser
+to view the website open the `web/index.html` file in a browser. if you want to make any changes make sure you've got the [tailwind cli](https://tailwindcss.com/docs/installation/tailwind-cli) installed and running in the background.
 
 ## architecture
 
 - **server**: an http api built with [axum](https://github.com/tokio-rs/axum) and deployed to [aws lambda](https://aws.amazon.com/lambda)
-- **web**: a static site written in [htmx](https://htmx.org)/css/js and deployed to [cloudflare pages](https://www.cloudflare.com/products/pages)
+- **web**: a static site built with [htmx](https://htmx.org)/[tailwindcss](https://tailwindcss.com) and deployed to [cloudflare pages](https://www.cloudflare.com/products/pages)
 
 ## credits
 
