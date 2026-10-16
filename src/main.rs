@@ -24,19 +24,21 @@ struct Ctx {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    let cors = CorsLayer::new()
+        .allow_methods([Method::GET])
+        .allow_origin("https://shorter.dev".parse::<HeaderValue>()?)
+        .allow_headers(Any);
+
+    let ctx = Ctx {
+        hickory: TokioResolver::builder_tokio()?.build()?,
+    };
+
     let app = Router::new()
         .route("/", get(|| async { "Hello, World!" }))
         .route("/search", get(search))
         .route("/lookup", get(lookup))
-        .layer(
-            CorsLayer::new()
-                .allow_methods([Method::GET])
-                .allow_origin("https://shorter.dev".parse::<HeaderValue>()?)
-                .allow_headers(Any),
-        )
-        .with_state(Ctx {
-            hickory: TokioResolver::builder_tokio()?.build()?,
-        });
+        .layer(cors)
+        .with_state(ctx);
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:8080").await?;
     println!("listening to http://{}", listener.local_addr()?);
@@ -142,11 +144,7 @@ struct LookupParams {
     href="https://www.dynadot.com/domain/search?rscreg=shorter&domain={{domain}}"
     class="btn hover:bg-neutral-900 {% if available %}text-green-500{% else %}text-red-500{% endif %}"
 >
-    {% if available %}
-        continue
-    {% else %}
-        lookup
-    {% endif %}
+    {% if available %}continue{% else %}lookup{% endif %}
 </a>
 "#
 )]

@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width" />
     <title>shorter</title>
     <meta name="description" content="a domain shortener tool" />
+    <meta name="htmx-config" content='{"mode":"cors"}' />
     <meta
       http-equiv="Content-Security-Policy"
-      content="connect-src 'self' http://127.0.0.1:8080 https://5mmnbausmvkvlgyylpztxdkbsu0wnyyf.lambda-url.eu-west-1.on.aws"
+      content="connect-src 'self' http://127.0.0.1:8080 https://api.shorter.dev"
     />
     <link rel="icon" href="favicon.ico" sizes="32x32" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link href="styles/output.css" rel="stylesheet" />
-    <script src="scripts/htmx.min.js" defer></script>
     <script src="scripts/main.js" defer></script>
+    <script src="scripts/htmx.min.js" defer></script>
   </head>
   <body>
     <div class="container mx-auto px-6 xl:max-w-7xl">
